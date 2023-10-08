@@ -50,6 +50,7 @@ guipacs=(
     qt6-wayland
     kitty
     dolphin
+    seatd
 	sddm
 	firefox
 	nm-connection-editor
