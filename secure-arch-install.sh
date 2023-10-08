@@ -42,14 +42,26 @@ pacstrappacs=(
         )
 ### Desktop packages #####
 guipacs=(
-	plasma
+	hyprland
+    dunst
+    wofi
+    xdg-desktop-portal-hyprland
+    qt5-wayland
+    qt6-wayland
+    kitty
+    dolphin
 	sddm
-	kitty
 	firefox
 	nm-connection-editor
 	neofetch
-	mousepad
  	sbctl
+    pipewire
+    pipewire-alsa
+    pipewire-jack
+    pipewire-pulse
+    gst-plugin-pipewire
+    libpulse
+    wireplumber
 	)
 
 # Partition
