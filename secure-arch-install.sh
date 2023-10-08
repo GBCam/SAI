@@ -81,8 +81,8 @@ partprobe $target
 sleep 2
 
 echo "Creating partitions..."
-sgdisk -n 0:0:+512M -t 0:ef00 -c 0:esp $disk
-sgdisk -n 0:0:0 -t 0:8309 -c 0:luks $disk
+sgdisk -n 0:0:+512M -t 0:ef00 -c 0:esp $target
+sgdisk -n 0:0:0 -t 0:8309 -c 0:luks $target
 
 # Reload partition table
 sleep 2
@@ -129,6 +129,12 @@ mount ${target_part1} /mnt/efi
 
 #Update pacman mirrors and then pacstrap base install
 echo "Pacstrapping..."
+sed -i -e '/^#ParallelDownloads = 5/s/^# //'
+
+pacman-key --init
+pacman-key --populate archlinux
+pacman -Sy archlinux-keyring
+
 reflector --country US --age 24 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap -K /mnt "${pacstrappacs[@]}"
 
