@@ -5,7 +5,7 @@
 #check if we're root
 if [[ "$UID" -ne 0 ]]; then
     echo "This script needs to be run as root!" >&2
-    exit 3
+    exit 1
 fi
 
 #Setup script to ask for information
