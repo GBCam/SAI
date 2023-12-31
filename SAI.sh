@@ -23,22 +23,24 @@ prompt_for_input() {
 }
 
 select_option() {
-    local options=("${!1}")
-    local choice
-    while true; do
-        echo "$2"
-        for i in "${!options[@]}"; do
-            echo "$((i+1))) ${options[i]}"
-        done
-        read -p "Enter the number of your choice: " choice
-        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#options[@]}" ]; then
-            echo "${options[$((choice-1))]}"
-            break
-        else
-            echo "Please enter a valid choice."
-        fi
-    done
+   local options=("${!1}")
+   local choice
+   while true; do
+       echo "$2"
+       for i in "${!options[@]}"; do
+           echo "$((i+1))) ${options[i]}"
+       done
+       echo ""
+       read -p "Enter the number of your choice: " choice
+       if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#options[@]}" ]; then
+           echo "${options[$((choice-1))]}"
+           break
+       else
+           echo "Please enter a valid choice."
+       fi
+   done
 }
+
 
 #Present questions to user
 hostname=$(prompt_for_input "Please enter your hostname: ")
