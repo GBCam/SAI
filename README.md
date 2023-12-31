@@ -1,4 +1,4 @@
-# UEFI + btrfs + Secure Boot + Unified Kernel Image + encrypted root
+# UEFI + Btrfs + Secure Boot + Unified Kernel Image + Encrypted root
 
 I'm just trying to make the forked script from **c0mpile** (Original from **walian0**) more user friendly for myself and others.  It's just a learning experience for me right now. I know this kind of gets rid of the fully automated script idea, but as I stated before I wanted to take this approach to just learn and well, hopefully help others learn too.
 
