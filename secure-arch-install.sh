@@ -8,13 +8,58 @@ if [[ "$UID" -ne 0 ]]; then
     exit 3
 fi
 
+#Setup script to ask for information
+prompt_for_input() {
+    local response
+    while true; do
+        read -p "$1" response
+        if [ -n "$response" ]; then
+            echo "$response"
+            break
+        else
+            echo "Please enter a valid choice."
+        fi
+    done
+}
+
+select_option() {
+    local options=("${!1}")
+    local choice
+    while true; do
+        echo "$2"
+        for i in "${!options[@]}"; do
+            echo "$((i+1))) ${options[i]}"
+        done
+        read -p "Enter the number of your choice: " choice
+        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#options[@]}" ]; then
+            echo "${options[$((choice-1))]}"
+            break
+        else
+            echo "Please enter a valid choice."
+        fi
+    done
+}
+
+#Present questions to user
+hostname=$(prompt_for_input "Please enter your hostname: ")
+username=$(prompt_for_input "What shall we call you? ")
+
+locales=("en_US.UTF-8" "en_GB.UTF-8" "de_DE.UTF-8" "fr_FR.UTF-8" "es_ES.UTF-8")
+locale=$(select_option locales[@] "Select your locale:")
+
+keymaps=("us" "uk" "de" "fr" "it")
+keymap=$(select_option keymaps[@] "Select your Keymap:")
+
+timezones=("America/New_York" "America/Chicago" "America/Denver" "America/Los_Angeles" "America/Anchorage" "America/Honolulu" "Europe/London" "Europe/Berlin" "Asia/Tokyo" "Other")
+timezone=$(select_option timezones[@] "Select your Timezone:")
+
+# Not listed? Go here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+if [ "$timezone" = "Other" ]; then
+    timezone=$(prompt_for_input "Please enter your timezone: ")
+fi
+
 ### Config options
 target="/dev/nvme0n1"
-locale="en_US.UTF-8"
-keymap="us"
-timezone="America/New_York"
-hostname="laptop"
-username="kevin"
 #SHA512 hash of password. To generate, run 'mkpasswd -m sha-512', don't forget to prefix any $ symbols with \ . The entry below is the hash of 'password'
 user_password="\$6\$/VBa6GuBiFiBmi6Q\$yNALrCViVtDDNjyGBsDG7IbnNR0Y/Tda5Uz8ToyxXXpw86XuCVAlhXlIvzy1M8O.DWFB6TRCia0hMuAJiXOZy/"
 
